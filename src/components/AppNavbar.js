@@ -34,7 +34,7 @@ class AppNavbar extends Component {
                 <Collapse isOpen={this.state.isOpen} navbar>
                   <Nav className="mr-auto" navbar>
                     <NavItem>
-                    <NavLink href='#/About'>About</NavLink>
+                    <NavLink href='#/about'>About</NavLink>
                     </NavItem>
                     <UncontrolledDropdown nav inNavbar>
                       <DropdownToggle nav caret>
