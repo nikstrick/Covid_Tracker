@@ -151,12 +151,12 @@ class App extends Component {
     return (
       <HashRouter>
         <div>
+        <AppNavbar setCountry={this.setCountry} setGlobal={this.setGlobal} simpleText={this.state.simpleText}/>
         <Route exact path='/' render={props=>(
           
-              <React.Fragment>
-                <AppNavbar setCountry={this.setCountry} setGlobal={this.setGlobal} simpleText={this.state.simpleText}/>
+              
                 <Tab Global={this.state.Global} Country={this.state.Country} graphData={this.state.graphData} graphData2={this.state.graphData2} lineChartData={this.state.lineChartData}/>
-              </React.Fragment>
+              
           )}/>
         <Route path='/about'component={About}/>
         </div>
