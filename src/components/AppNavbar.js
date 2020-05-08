@@ -29,12 +29,12 @@ class AppNavbar extends Component {
         return (
             <div>
               <Navbar color="warning" light expand="md">
-                <NavbarBrand href="/">COVID19-Tracker</NavbarBrand>
+                <NavbarBrand href="#/">COVID19-Tracker</NavbarBrand>
                 <NavbarToggler onClick={this.toggle} />
                 <Collapse isOpen={this.state.isOpen} navbar>
                   <Nav className="mr-auto" navbar>
                     <NavItem>
-                    <NavLink href='./About'>About</NavLink>
+                    <NavLink href='#/About'>About</NavLink>
                     </NavItem>
                     <UncontrolledDropdown nav inNavbar>
                       <DropdownToggle nav caret>
