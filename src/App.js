@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {BrowserRouter as Router,Route} from 'react-router-dom';
+import {BrowserRouter as Router,Switch,Route} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AppNavbar from'./components/AppNavbar';
 import About from './components/About';
@@ -150,6 +150,7 @@ class App extends Component {
     // console.log(this.state.lineChartData)
     return (
       <Router>
+        <Switch>
         <div>
         <AppNavbar setCountry={this.setCountry} setGlobal={this.setGlobal} simpleText={this.state.simpleText}/>
         
@@ -160,6 +161,7 @@ class App extends Component {
           <About/>
           </Route>
           </div>
+          </Switch>
       </Router>
     )
   }
