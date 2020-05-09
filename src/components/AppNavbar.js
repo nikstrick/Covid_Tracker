@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom';
 import {
     Collapse,
     Navbar,
@@ -29,12 +30,12 @@ class AppNavbar extends Component {
         return (
             <div>
               <Navbar color="warning" light expand="md">
-                <NavbarBrand href="#/">COVID19-Tracker</NavbarBrand>
+                <NavbarBrand ><Link style={{color:'black'}} to="/">COVID19-Tracker</Link></NavbarBrand>
                 <NavbarToggler onClick={this.toggle} />
                 <Collapse isOpen={this.state.isOpen} navbar>
                   <Nav className="mr-auto" navbar>
                     <NavItem>
-                    <NavLink href='#/about'>About</NavLink>
+                    <NavLink><Link style={{color:'black'}} to="/about">About</Link></NavLink>
                     </NavItem>
                     <UncontrolledDropdown nav inNavbar>
                       <DropdownToggle nav caret>
