@@ -150,18 +150,17 @@ class App extends Component {
     // console.log(this.state.lineChartData)
     return (
       <Router>
-        <Switch>
         <div>
         <AppNavbar setCountry={this.setCountry} setGlobal={this.setGlobal} simpleText={this.state.simpleText}/>
-        
+        <Switch>
         <Route exact path='/' render={props=>(
                 <Tab Global={this.state.Global} Country={this.state.Country} graphData={this.state.graphData} graphData2={this.state.graphData2} lineChartData={this.state.lineChartData}/>
           )}/>
+        </Switch>
         <Route path='/about'>
           <About/>
           </Route>
           </div>
-          </Switch>
       </Router>
     )
   }
