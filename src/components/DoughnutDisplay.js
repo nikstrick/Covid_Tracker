@@ -9,8 +9,8 @@ class DoughnutDisplay extends Component{
   render(){
     // console.log(this.props.graphData)
     return (
-      <Container>
-        <Doughnut
+      <Container style={{backgroundColor:'rgb(255,220,193)',marginTop:'10px'}}>
+        <Doughnut 
           data={this.props.graphData}
           options={{
             title:{

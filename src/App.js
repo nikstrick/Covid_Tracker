@@ -44,7 +44,7 @@ class App extends Component {
           data: []
           }
       ]},
-    graphData:{labels: ['Confirmed','Deaths','Recovered'],
+    graphData:{labels: ['Active','Deaths','Recovered'],
     datasets: [
       {
         label: 'Total Cases',
@@ -64,7 +64,7 @@ class App extends Component {
       }
     ]
     },
-    graphData2:{labels: ['Confirmed','Deaths','Recovered'],
+    graphData2:{labels: ['Active','Deaths','Recovered'],
     datasets: [
       {
         label: 'New Cases Today',
@@ -87,9 +87,14 @@ class App extends Component {
 }
   
   componentDidMount(){
+    const graphData={...this.state.graphData}
+    const graphData2={...this.state.graphData2}
     axios.get('https://api.covid19api.com/summary')
-    .then(res=>
-      this.setState({Global:res.data.Global,Countries: res.data.Countries}))
+    .then(res=>{
+      const {TotalConfirmed,TotalDeaths,TotalRecovered,NewConfirmed,NewDeaths,NewRecovered}=res.data.Global
+      graphData.datasets[0].data=[TotalConfirmed-TotalDeaths-TotalRecovered,TotalDeaths,TotalRecovered]
+      graphData2.datasets[0].data=[NewConfirmed,NewDeaths,NewRecovered]
+      this.setState({Global:res.data.Global,Countries: res.data.Countries,graphData:graphData,graphData2:graphData2,simpleText:'Global'})})
    }
    fillData=(data)=>{
     const lineChartData={...this.state.lineChartData}
@@ -103,7 +108,7 @@ class App extends Component {
     });
     return lineChartData
    }
-   setCountryData=(res)=>{
+   setCountryData=async(res)=>{
      const{data}=res
      const graphData={...this.state.graphData}
      const graphData2={...this.state.graphData2}
@@ -125,11 +130,11 @@ class App extends Component {
     const lc=this.fillData(data)
     this.setState({dataByCountry:data ,graphData:graphData,graphData2:graphData2,simpleText:Country,lineChartData:lc})
    }
-   setCountry=(Country)=>{ 
+   setCountry=async(Country)=>{ 
      if(Country==='India')
       axios.get('https://api.covid19api.com/total/country/india').then(res=>this.setCountryData(res))
-      else if(Country==='Pakistan')
-      axios.get('https://api.covid19api.com/total/country/pakistan').then(res=>this.setCountryData(res))
+      else if(Country==='China')
+      axios.get('https://api.covid19api.com/total/country/china').then(res=>this.setCountryData(res))
       else if(Country==='Italy')
       axios.get('https://api.covid19api.com/total/country/italy').then(res=>this.setCountryData(res))
       else 
@@ -138,11 +143,12 @@ class App extends Component {
     setGlobal=()=>{
       const graphData={...this.state.graphData}
       const graphData2={...this.state.graphData2}
-      const {Global}=this.state
-     graphData.labels=['Confirmed: '+Global.TotalConfirmed,'Deaths: '+Global.TotalDeaths,'Recovered: '+Global.TotalRecovered]
-     graphData.datasets[0].data=[Global.TotalConfirmed,Global.TotalDeaths,Global.TotalRecovered]
-     graphData2.labels=['Confirmed: '+Global.NewConfirmed,'Deaths: '+Global.NewDeaths,'Recovered: '+Global.NewRecovered]
-     graphData2.datasets[0].data=[Global.NewConfirmed,Global.NewDeaths,Global.NewRecovered]
+      const {TotalConfirmed,TotalDeaths,TotalRecovered,NewConfirmed,NewDeaths,NewRecovered}=this.state.Global
+      const temp=TotalConfirmed-TotalDeaths-TotalRecovered
+     graphData.labels=['Acitve: '+temp,'Deaths: '+TotalDeaths,'Recovered: '+TotalRecovered]
+     graphData.datasets[0].data=[temp,TotalDeaths,TotalRecovered]
+     graphData2.labels=['Active: '+NewConfirmed,'Deaths: '+NewDeaths,'Recovered: '+NewRecovered]
+     graphData2.datasets[0].data=[NewConfirmed,NewDeaths,NewRecovered]
      this.setState({simpleText:'Global',graphData:graphData,graphData2:graphData2})
     }
     
@@ -153,14 +159,14 @@ class App extends Component {
         <div>
         <AppNavbar setCountry={this.setCountry} setGlobal={this.setGlobal} simpleText={this.state.simpleText}/>
         <Switch>
-        <Route exact path='/' render={props=>(
-                <Tab Global={this.state.Global} Country={this.state.Country} graphData={this.state.graphData} graphData2={this.state.graphData2} lineChartData={this.state.lineChartData}/>
-          )}/>
-        </Switch>
-        <Route path='/about'>
+        <Route exact path='/'>
+            <Tab   Global={this.state.Global} Country={this.state.Country} graphData={this.state.graphData} graphData2={this.state.graphData2} lineChartData={this.state.lineChartData}/>
+        </Route>
+        <Route exact path='/about'>
           <About/>
-          </Route>
-          </div>
+        </Route>
+        </Switch>
+        </div>
       </Router>
     )
   }

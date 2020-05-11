@@ -48,8 +48,8 @@ class AppNavbar extends Component {
                         <DropdownItem onClick={()=>{this.props.setCountry('Italy')}}>
                         Italy
                         </DropdownItem>
-                        <DropdownItem onClick={()=>{this.props.setCountry('Pakistan')}}>
-                        Pakistan
+                        <DropdownItem onClick={()=>{this.props.setCountry('China')}}>
+                        China
                         </DropdownItem>
                         <DropdownItem onClick={()=>{this.props.setCountry('United States of America')}}>
                         United States
